@@ -1,8 +1,9 @@
 library(tidyverse)
 
 batch <- read_file("data/day04.txt")
+batch <- tibble(x = read_lines("data/day04.txt"))
 
-# Counting passports with all relevant fields
+# Counting passports with all fields
 all_pps <- batch %>% str_split("\r\n\r\n") %>%
   unlist() %>% 
   map2(1:260, function(pas, id) {
@@ -21,6 +22,7 @@ all_pps %>%
   summarise(nas = sum(!is.na(c_across()))) %>% 
   summarise(sum(nas==7))
 
+# Counting valid passports
 all_pps %>%
   rowwise() %>% 
   mutate(
